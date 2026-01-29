@@ -24,8 +24,7 @@ class HomeActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Home"
+        supportActionBar?.title = getString(R.string.home)
 
         val repository = HabitRepository(this)
         val factory = ViewModelFactory(repository)

@@ -27,7 +27,7 @@ class FormActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Add Habit"
+        supportActionBar?.title = getString(R.string.add_habit)
 
         val repository = HabitRepository(this)
         val factory = ViewModelFactory(repository)

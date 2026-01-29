@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">AssignmentSix</string>
     <string name="title_home">My Daily Habits</string>
+    <string name="home">Home</string>
+    <string name="add_habit">Add Habit</string>
+    <string name="my_habits">My Habits</string>
     <string name="btn_add_habit">Add Habit</string>
     <string name="btn_view_habits">View Habits</string>
     <string name="add_new_habit">Add New Habit</string>
