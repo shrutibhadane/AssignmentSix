@@ -9,8 +9,15 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.habit_builder.assignment_four.HabitListActivity
 import com.habit_builder.assignment_two.FormActivity
+import androidx.lifecycle.ViewModelProvider
+import com.habit_builder.assignment_three.HabitRepository
+import com.habit_builder.viewmodel.HomeViewModel
+import com.habit_builder.viewmodel.ViewModelFactory
 
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -19,6 +26,10 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Home"
+
+        val repository = HabitRepository(this)
+        val factory = ViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         findViewById<Button>(R.id.btn_add_habit).setOnClickListener {
             val intent = Intent(this, FormActivity::class.java)

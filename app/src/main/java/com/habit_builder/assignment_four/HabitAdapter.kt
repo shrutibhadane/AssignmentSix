@@ -9,15 +9,14 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habit_builder.assignment_three.Habit
-import com.habit_builder.assignment_three.HabitDatabaseHelper
 import com.habit_builder.assignmentsix.R
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class HabitAdapter(
-    private val habitList: MutableList<Habit>,
-    private val dbHelper: HabitDatabaseHelper
+    private val habitList: List<Habit>,
+    private val onCheckIn: (Habit, Int) -> Unit
 ) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>() {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -48,28 +47,9 @@ class HabitAdapter(
 
         holder.cb_habit_done.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                handleCheckIn(habit, today, position)
+                onCheckIn(habit, position)
             }
         }
-    }
-
-    private fun handleCheckIn(habit: Habit, today: String, position: Int) {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -1)
-        val yesterday = dateFormat.format(calendar.time)
-
-        val newStreak = when (habit.lastCompletedDate) {
-            yesterday -> habit.streak + 1
-            today -> habit.streak // Should not happen as checkbox is disabled
-            else -> 1 // First time or missed days
-        }
-
-        dbHelper.updateHabitCompletion(habit.id, newStreak, today)
-        
-        habit.lastCompletedDate = today
-        // Update the habit object in the list
-        habitList[position] = habit.copy(streak = newStreak, lastCompletedDate = today)
-        notifyItemChanged(position)
     }
 
     private fun updateStreakUI(holder: HabitViewHolder, streak: Int) {
